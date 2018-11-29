@@ -1,0 +1,25 @@
+{
+  "name": "smorodina-test-task",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "author": "Sergey Maksimenko",
+  "license": "ISC",
+  "devDependencies": {
+    "jasmine": "^3.3.0",
+    "jasmine-es6": "^0.4.3"
+  },
+  "dependencies": {
+    "@babel/cli": "^7.0.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "@babel/preset-env": "^7.0.0",
+    "babel-loader": "^8.0.4",
+    "node-fetch": "^2.3.0",
+    "pg": "^7.6.1",
+    "should": "^13.2.3",
+    "uuid": "^3.3.2"
+  }
+}
