@@ -4,19 +4,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "babel src -d dist",
+    "start": "node dist/index.js",
     "test": "jasmine"
   },
   "author": "Sergey Maksimenko",
   "license": "ISC",
   "devDependencies": {
-    "jasmine": "^3.3.0",
-    "jasmine-es6": "^0.4.3"
+    "@babel/cli": "^7.1.5",
+    "@babel/core": "^7.1.6",
+    "@babel/polyfill": "^7.0.0",
+    "@babel/preset-env": "^7.1.6",
+    "babel-plugin-transform-regenerator": "^6.26.0"
   },
   "dependencies": {
-    "@babel/cli": "^7.0.0",
-    "babel-core": "^7.0.0-bridge.0",
-    "@babel/preset-env": "^7.0.0",
-    "babel-loader": "^8.0.4",
+    "jasmine": "^3.3.0",
     "node-fetch": "^2.3.0",
     "pg": "^7.6.1",
     "should": "^13.2.3",

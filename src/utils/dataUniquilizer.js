@@ -1,3 +1,5 @@
+"use strict";
+
 const uniquilize = function (results) {
   const allValues = {};
   results.forEach(dbValues => {

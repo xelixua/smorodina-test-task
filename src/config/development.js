@@ -1,5 +1,5 @@
 const config = {
-  baseUrl: 'тестконнект.смородина.онлайн/challenges/be1/',
+  baseUrl: 'тестконнект.смородина.онлайн/challenges/be1',
   databases: [
     'db1',
     'db2'

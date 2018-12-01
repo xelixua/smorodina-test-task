@@ -21,12 +21,17 @@ const config = {
   }
 };
 const dbConnector = new DBConnector(config);
-const client = await (new Client()).connect();
 
 /**
  * DB connector
  */
 describe('DB connector', () => {
+  let client;
+
+  beforeAll(async () => {
+    await dbConnector.init();
+    client = await (new Client()).connect();
+  });
 
   /**
    * DB connector#write
@@ -59,7 +64,6 @@ describe('DB connector', () => {
         }
       });
     });
-    console.log('storedTypes', storedTypes);
 
     await dbConnector.write('equipment', [{
         "id": "10",
@@ -87,7 +91,5 @@ describe('DB connector', () => {
         }
       });
     });
-
-    console.log('storedEquipment', storedEquipment);
   });
 });

@@ -10,7 +10,8 @@ export default class Application {
     this._timeGetter = new TimeGetter();
   }
 
-  start() {
+  async start() {
+    await this._dbConnector.init();
     let types = this._dataFetcher.getTypes();
     types = uniquilize(types);
     let equipment = this._dataFetcher.getEquipment();
