@@ -24,7 +24,8 @@ describe('Time getter', () => {
     setTimeout(() => {
       const length = timeGetter.stop(intervalId);
       should(typeof length).be.exactly('number');
-      should(length > 5000).be.exactly(true);
-    }, 5000);
+      should(length > 3000).be.exactly(true);
+      done();
+    }, 3000);
   });
 });

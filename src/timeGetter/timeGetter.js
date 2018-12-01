@@ -1,3 +1,5 @@
+"use strict";
+
 import uuidV4 from 'uuid/v4';
 /**
  * Check time intervals

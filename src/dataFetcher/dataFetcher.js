@@ -1,3 +1,6 @@
+"use strict";
+require("babel-polyfill");
+
 import fetch  from 'node-fetch';
 
 /**
@@ -13,7 +16,7 @@ export default class DataFetcher {
    * @returns {Promire<Array<Objet>} promises which with be resolved with request data
    */
   getTypes() {
-    const requests = config.databases.map(database => this._fetchAllData('getTypes', database));
+    const requests = this._config.databases.map(database => this._fetchAllData('getTypes', database));
     return Promise.all(requests);
   }
 
@@ -22,20 +25,20 @@ export default class DataFetcher {
    * @returns {Promire<Array<Objet>} promises which with be resolved with request data
    */
   getEquipment() {
-    const requests = config.databases.map(database => this._fetchAllData('getEquipment', database));
+    const requests = this._config.databases.map(database => this._fetchAllData('getEquipment', database));
     return Promise.all(requests);
   }
 
   async _fetchAllData(method, database) {
     let hasNextPage = true;
-    const items = [];
+    let items = [];
     const opts = {
       method,
-      first: config.itemsCount
+      first: this._config.itemsCount
     };
     while (hasNextPage) {
       const result = await this._fetch(opts, database);
-      items = items.concat(result.items);
+      items = items.concat(result.body.items);
       hasNextPage = result.hasNextPage;
       opts.after = result.lastItemCursor;      
     }
@@ -51,7 +54,7 @@ export default class DataFetcher {
       }
     };
 
-    params = params.reduce((url, param, index) => {
+    params = Object.keys(params).reduce((url, param, index) => {
       if (index) {
         url += '&';
       } else {
@@ -62,6 +65,6 @@ export default class DataFetcher {
     }, '');
 
 
-    return fetch(`https://${config.baseUrl}/${database}/${queryParams}`, options);
+    return fetch(`https://${this._config.baseUrl}/${database}/${params}`, options);
   }
 }

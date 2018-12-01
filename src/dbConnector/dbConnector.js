@@ -1,3 +1,5 @@
+"use strict";
+
 import { Client } from 'pg';
 
 /**
@@ -5,30 +7,34 @@ import { Client } from 'pg';
  */
 export default class DBConnector {
   constructor(config) {
-    this._init();
-    this._connectToDB();
-    this._config = config;
+    this._config = config;        
   }
 
-  _init() {
-    this._createDatabase();
+  async init() {
+    console.log('db client initializing');
+    this._client = await this._connectToDB();
+    console.log('this._client', this._client);
+    await this._createDatabase();
+    await this._createTypesTable();
+    await this._createEquipmentTable();
   }
 
   _connectToDB() {
-    const client = new Client();
-    this._client = await client.connect();
+    const clientCreator = new Client();
+    return clientCreator.connect();
   }
 
-  _createDatabase() {
-    return this._performQuery(`CREATE DATABASE ${config.localDatabaseName}`);
+  async _createDatabase() {
+    await this._performQuery(`CREATE DATABASE IF NOT EXISTS ${this._config.localDatabaseName}`);
+    await this._performQuery(`USE ${this._config.localDatabaseName}`);
   }  
 
-  _createTypesTable() {
-    return this._createTable('types', config.schema.types);
+  async _createTypesTable() {
+    await this._createTable('types', this._config.schema.types);
   }
 
-  _createEquipmentTable() {  
-    return this._createTable('equipment', config.schema.equipment);
+  async _createEquipmentTable() {  
+    await this._createTable('equipment', this._config.schema.equipment);
   };
 
   _createTable(name, rows) {    
@@ -54,7 +60,7 @@ export default class DBConnector {
 
   _performQuery (command, values) {
     return new Promise((resolve, reject) => {
-      client.query(command, values, (err, res) => {
+      this._client.query(command, values, (err, res) => {
         if (err) {
           reject(err);
         } else {
