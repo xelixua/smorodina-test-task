@@ -11,4 +11,4 @@ const uniquilize = function (results) {
   return Object.values(allValues);
 }
 
-export default { uniquilize };
+export { uniquilize };

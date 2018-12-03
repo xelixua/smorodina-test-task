@@ -7,12 +7,19 @@ const config = {
   localDatabaseName: 'test',
   itemsCount: 10,
   schema: {
-    Types: {
-
-    },
-    Equipment: {
-
-    }
+    types: [
+      'id INT',
+      'name VARCHAR(20)',
+      'warrantyPeriodId INT',
+      'warrantyPeriodName VARCHAR(20)',
+      'warrantyPeriod TIMESTAMP'
+    ],
+    equipment: [
+      'id INT',
+      'name VARCHAR(20)',
+      'price INT',
+      'type SMALLINT'
+    ]
   }
 };
 
