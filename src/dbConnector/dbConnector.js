@@ -11,30 +11,23 @@ export default class DBConnector {
   }
 
   async init() {
-    console.log('db client initializing');
     this._client = await this._connectToDB();
-    console.log('this._client', this._client);
-    await this._createDatabase();
     await this._createTypesTable();
     await this._createEquipmentTable();
   }
 
   _connectToDB() {
-    const clientCreator = new Client();
-    return clientCreator.connect();
+    const client = new Client();
+    client.connect();
+    return client;
   }
 
-  async _createDatabase() {
-    await this._performQuery(`CREATE DATABASE IF NOT EXISTS ${this._config.localDatabaseName}`);
-    await this._performQuery(`USE ${this._config.localDatabaseName}`);
-  }  
-
   async _createTypesTable() {
-    await this._createTable('types', this._config.schema.types);
+    await this._createTable('types', this._config.default.schema.types);
   }
 
   async _createEquipmentTable() {  
-    await this._createTable('equipment', this._config.schema.equipment);
+    await this._createTable('equipment', this._config.default.schema.equipment);
   };
 
   _createTable(name, rows) {    

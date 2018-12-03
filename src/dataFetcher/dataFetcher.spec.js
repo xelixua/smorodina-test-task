@@ -22,7 +22,6 @@ describe('Data fetcher', () => {
    */  
   it('should get types', async () => {
     const types = await dataFetcher.getTypes();
-    console.log('types', types);
     types.should.be.instanceof(Array);
     types.length.should.not.equal(0);
 
@@ -46,7 +45,6 @@ describe('Data fetcher', () => {
    */
   it('should get equipment', async () => {
     const equipment = await dataFetcher.getEquipment();
-    console.log('equipment', equipment);
     equipment.should.be.instanceof(Array);
     equipment.length.should.not.equal(0);
 

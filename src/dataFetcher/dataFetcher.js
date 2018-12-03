@@ -16,7 +16,7 @@ export default class DataFetcher {
    * @returns {Promire<Array<Objet>} promises which with be resolved with request data
    */
   getTypes() {
-    const requests = this._config.databases.map(database => this._fetchAllData('getTypes', database));
+    const requests = this._config.default.databases.map(database => this._fetchAllData('getTypes', database));
     return Promise.all(requests);
   }
 
@@ -25,7 +25,7 @@ export default class DataFetcher {
    * @returns {Promire<Array<Objet>} promises which with be resolved with request data
    */
   getEquipment() {
-    const requests = this._config.databases.map(database => this._fetchAllData('getEquipment', database));
+    const requests = this._config.default.databases.map(database => this._fetchAllData('getEquipment', database));
     return Promise.all(requests);
   }
 
@@ -34,11 +34,12 @@ export default class DataFetcher {
     let items = [];
     const opts = {
       method,
-      first: this._config.itemsCount
+      first: this._config.default.itemsCount
     };
     while (hasNextPage) {
-      const result = await this._fetch(opts, database);
-      items = items.concat(result.body.items);
+      let result = await this._fetch(opts, database);
+      result = await result.json();
+      items = items.concat(result.items);
       hasNextPage = result.hasNextPage;
       opts.after = result.lastItemCursor;      
     }
@@ -65,6 +66,6 @@ export default class DataFetcher {
     }, '');
 
 
-    return fetch(`https://${this._config.baseUrl}/${database}/${params}`, options);
+    return fetch(`https://${this._config.default.baseUrl}/${database}/${params}`, options);
   }
 }
